@@ -1395,5 +1395,45 @@ if(cur!==entered) createOverlay();
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',checkAndShow); else checkAndShow();
 })();
 </script>
+<script src="capacitor.js"></script>
+<script>
+    const { App } = Capacitor.Plugins;
+    const { ScreenOrientation } = Capacitor.Plugins;
+    const { StatusBar } = Capacitor.Plugins;
+
+    App.addListener('backButton', ({ canGoBack }) => {
+        const playerView = document.getElementById('player-view');
+        if (playerView.classList.contains('active')) {
+            window.history.back();
+        } else if (window.location.pathname !== '/') {
+            window.history.back();
+        } else {
+            App.exitApp();
+        }
+    });
+
+    window.addEventListener('DOMContentLoaded', async () => {
+        try {
+            await StatusBar.setBackgroundColor({ color: '#000000' });
+            await StatusBar.setStyle({ style: 'DARK' });
+        } catch (e) {}
+    });
+
+    const oldLandscapeBtn = document.getElementById('landscapeBtn');
+    const newLandscapeBtn = oldLandscapeBtn.cloneNode(true);
+    oldLandscapeBtn.parentNode.replaceChild(newLandscapeBtn, oldLandscapeBtn);
+
+    newLandscapeBtn.onclick = async (e) => {
+        e.stopPropagation();
+        const card = document.getElementById('card');
+        if (!document.fullscreenElement) {
+            await card.requestFullscreen().catch(() => {});
+            try { await ScreenOrientation.lock({ orientation: 'landscape' }); } catch(e) {}
+        } else {
+            await document.exitFullscreen();
+            try { await ScreenOrientation.lock({ orientation: 'portrait' }); } catch(e) {}
+        }
+    };
+</script>
 </body>
 </html>

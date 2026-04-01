@@ -11,7 +11,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '20'
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -22,13 +22,18 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Generate App Assets (Icons & Splash)
+        run: |
+          npm install @capacitor/assets sharp
+          npx capacitor-assets generate --android --icon-source Mizik.png --splash-source Mizik.png || true
+
       - name: Prepare Web Assets
         run: |
           mkdir -p www
-          if [ -f "index.html" ]; then cp index.html www/; fi
+          cp -r * www/ 2>/dev/null || true
           if [ ! -f "www/index.html" ]; then echo "<html><body>Mizik App</body></html>" > www/index.html; fi
 
-      - name: Initialize Capacitor Android
+      - name: Capacitor Sync
         run: |
           npx cap add android || true
           npx cap sync android

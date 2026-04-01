@@ -1,5 +1,19 @@
 {
-  "appId": "org.adamdh7.miziktest",
+  "appId": "org.adamdh7.mizik",
   "appName": "Mizik",
-  "webDir": "www"
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "backgroundColor": "#000000",
+      "androidScaleType": "CENTER_CROP"
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#000000"
+    }
+  }
 }
