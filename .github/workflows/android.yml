@@ -27,14 +27,15 @@ jobs:
           if [ -f "index.html" ]; then cp index.html www/; fi
           if [ ! -f "www/index.html" ]; then echo "<h1>Mizik App</h1>" > www/index.html; fi
 
-      - name: Capacitor Sync
-        run: npx cap sync android
+      - name: Add and Sync Android Platform
+        run: |
+          npx cap add android
+          npx cap sync android
 
       - name: Build APK
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew clean
           ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK
