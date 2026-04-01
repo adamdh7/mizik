@@ -1,0 +1,6 @@
+- name: Build APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew clean # Ajoute cette ligne pour nettoyer avant de build
+          ./gradlew assembleDebug --stacktrace # Ajoute --stacktrace pour voir l'erreur précise si ça échoue

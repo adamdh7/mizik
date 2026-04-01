@@ -1,0 +1,8 @@
+node_modules/
+android/app/build/
+.gradle/
+capacitor.config.json.user
+node_modules/
+node_modules/
+node_modules/
+android/
